@@ -8,6 +8,8 @@
 
 ## 使い方
 
+詳細は `doc.md` を参照.
+
 ```bash
 make # PDF 生成
 
