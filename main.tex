@@ -1,0 +1,146 @@
+% main.tex — Minimal self‑contained Beamer template + extras
+% Engine: LuaLaTeX (recommended)
+% Compile with: latexmk -lualatex -shell-escape main.tex
+%   (‑shell‑escape is required for the minted package to call Pygments)
+% Encoding: UTF‑8
+
+% ! WARNING: ベクトルなどについて unicode-math を使っている影響で, 太字や斜体が正しく表示されない場合がある.
+% ! ベクトルについては \symbfit{}, ゼロベクトルなどについては \symbf{0} などと表す. (適宜\vec{}など自分で設定)
+% ! また, allowframebreaks について, proof 環境だと適切に動作しないため注意.
+
+\documentclass[aspectratio=169, 11pt]{beamer}
+% \documentclass[13pt]{beamer}
+
+% ==================== Packages & Theme ====================
+\usetheme{default}
+\setbeamercolor{background canvas}{bg=white}
+
+% --- UI: keep only page numbers ---------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{\hfill\insertframenumber/\inserttotalframenumber\hspace{0.5cm}}
+
+% --- Japanese ------------------------------------------------
+% 1) fontspec + unicode-math を有効化
+\usepackage{luatexja-fontspec}   % 欧文フォント指定に必須
+\usepackage{unicode-math}
+
+% 2) 本文フォント
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+
+% 3) 数式フォント
+\setmathfont{Latin Modern Math}
+\setmathfont[FakeBold=2.5]{Latin Modern Math}
+
+% --- General utilities --------------------------------------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[compatibility=false]{caption}  % for \captionof
+\usepackage{minted}                        % code highlighting (requires -shell-escape)
+\usepackage{booktabs}                      % nicer tables
+\usepackage{tcolorbox} 
+\usepackage{cleveref}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+% --- Colorbox ----------------------------------------------
+\tcbset{bluebox/.style={
+  colback=blue!10,     % 背景色
+  colframe=blue!10,    % 枠線も同色で “線なし” に見せる
+  boxrule=0pt,          % 枠線の太さ (0pt = なし)
+  arc=0pt,              % 角丸をゼロにして完全な長方形
+  left=6pt,right=6pt,   % 数式と枠の左右マージン
+  top=4pt,bottom=4pt,   % 上下マージン
+  width=\linewidth,     % 行幅いっぱいに伸ばす
+  enlarge left by=0mm,  % 左右のはみ出し補正
+  enlarge right by=0mm,
+  boxsep=0pt,           % colback と内容の間隔 (上下は top/bottom で調整) 
+}}
+
+\tcbset{graybox/.style={
+  colback=gray!10,     % 背景色
+  colframe=gray!10,    % 枠線も同色で “線なし” に見せる
+  boxrule=0pt,          % 枠線の太さ (0pt = なし)
+  arc=0pt,              % 角丸をゼロにして完全な長方形
+  left=6pt,right=6pt,   % 数式と枠の左右マージン
+  top=4pt,bottom=4pt,   % 上下マージン
+  width=\linewidth,     % 行幅いっぱいに伸ばす
+  enlarge left by=0mm,  % 左右のはみ出し補正
+  enlarge right by=0mm,
+  boxsep=0pt,           % colback と内容の間隔 (上下は top/bottom で調整) 
+}}
+
+% --- BibLaTeX ----------------------------------------------
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{references.bib}
+
+% ==================== Color / Typography ====================
+\setbeamercolor{structure}{fg=black}
+\setbeamercolor{alerted text}{fg=red}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+
+\setbeamerfont{section title}{series=\bfseries,size=\Large}
+\setbeamerfont{section in toc}{series=\bfseries,size=\Large}
+\setbeamercolor{section title}{fg=black}
+\setbeamercolor{section in toc}{fg=black}
+
+\setbeamerfont{subsection title}{series=\bfseries,size=\large}
+\setbeamerfont{subsection in toc}{series=\bfseries,size=\large}
+\setbeamercolor{subsection title}{fg=black}
+\setbeamercolor{subsection in toc}{fg=black}
+
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries, size=\Large}
+
+% Blocks (for theorem etc.)
+\setbeamercolor{block title}{fg=white,bg=blue!70}
+\setbeamercolor{block body}{bg=blue!10}
+
+% Theorem & proof env
+\theoremstyle{plain}
+% \newtheorem{theorem}{定理}
+
+% Full‑screen section frame macro
+\newcommand{\secframe}[1]{%
+  \begin{frame}[plain]
+    \centering
+    \color{black}\Huge\bfseries #1
+  \end{frame}}
+
+% ==================== Metadata ====================
+\title{{TITLE}}
+\subtitle{SUBTITLE}
+\author{{AUTHOR}}
+\institute{{INSTITUTE}}
+\date{DATE}
+
+% =============================================================
+\begin{document}
+
+% Title slide
+\frame{\titlepage}
+
+% Table of contents
+\begin{frame}{目次}
+  \tableofcontents
+\end{frame}
+
+\section{HELLO}
+\secframe{HELLO}
+
+\begin{frame}{HELLO}
+  スライド！！
+\end{frame}
+
+
+% =============================================================
+% Bibliography slide
+% =============================================================
+\begin{frame}[allowframebreaks]{参考文献}
+  \scriptsize
+  \printbibliography
+\end{frame}
+
+\end{document}
